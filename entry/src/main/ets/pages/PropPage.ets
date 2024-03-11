@@ -1,4 +1,5 @@
 //任务表
+@Observed
 class Task{
   static id:number=1
   //任务名称
@@ -33,9 +34,9 @@ struct PropPage{
   build(){
     Column({space:10}){
       //1.任务角度卡片
-      TaskStatistics()
+      TaskStatistics({totalTask:this.totalTask,finishTask:this.finishTask})
       //2.新增任务按钮
-      TaskList()
+      TaskList({totalTask:$totalTask,finishTask:$finishTask})
     }.width('100%').height('100%').backgroundColor('@F1F2F3')
   }
 
@@ -44,11 +45,18 @@ struct PropPage{
 @Component
 struct TaskList{
   //总任务数量
-  @Consume totalTask:number
+  @Link totalTask:number
   //己完成任务数量
-  @Consume finishTask:number
+  @Link finishTask:number
   //任务数组
   @State tasks:Task[]=[]
+
+  handleTaskChange(){
+    //1.更新任务总数量
+    this.totalTask=this.tasks.length
+    //2.更新已完成任务数量
+    this.finishTask=this.tasks.filter(item=>item.finished).length;//将任务已经完成的过滤出来
+  }
   build(){
     Column(){
       //2.新增任务按钮
@@ -66,20 +74,7 @@ struct TaskList{
           this.tasks,
           (item:Task,index)=>{
             ListItem(){
-              Row(){
-                Text(item.name)
-                  .fontSize(20)
-                Checkbox()
-                  .select(item.finished)
-                  .onChange(val=>{
-                    //1.更新当前任务状态
-                    item.finished=val;
-                    //2.更新已完成任务数量
-                    this.handleTaskChange()
-                  })
-              }
-              .card()//卡片样式背景
-              .justifyContent(FlexAlign.SpaceBetween)
+              TaskItem({item:item as Task,onTaskChange:this.handleTaskChange.bind(this)})
             }
             .swipeAction({
               end:this.DeleteButton(index)
@@ -107,21 +102,47 @@ struct TaskList{
       this.handleTaskChange()
     })
   }
-  handleTaskChange(){
-    //1.更新任务总数量
-    this.totalTask=this.tasks.length
-    //2.更新已完成任务数量
-    this.finishTask=this.tasks.filter(item=>item.finished).length;//将任务已经完成的过滤出来
+
+}
+
+
+@Component
+struct TaskItem{
+  @ObjectLink item:Task
+  onTaskChange:() => void  //方法传递，onTaskChange是方法变量名  ()：onTaskChange方法是无参  void:onTaskChange方法没有返回值
+  build(){
+    Row(){
+      if(this.item.finished){
+        Text(this.item.name)
+          .fontSize(20)
+          .finishedTask() //调用了上面的自定义样式函数：//任务完成样式
+      }else{
+        Text(this.item.name)
+          .fontSize(20)
+      }
+      Checkbox()
+        .select(this.item.finished)
+        .onChange(val=>{
+          //1.更新当前任务状态
+          this.item.finished=val;
+          //2.更新已完成任务数量
+          this.onTaskChange()
+          // this.handleTaskChange()
+        })
+    }
+    .card()//卡片样式背景
+    .justifyContent(FlexAlign.SpaceBetween)
   }
 }
+
 
 
 @Component
 struct TaskStatistics{
   //总任务数量
-  @Consume totalTask:number //不允许子组件初始化 因为数据都是从父组件来的
+  @Prop totalTask:number //不允许子组件初始化 因为数据都是从父组件来的
   //己完成任务数量
-  @Consume finishTask:number
+  @Prop finishTask:number
   build(){
     //1.任务角度卡片
     Row(){
