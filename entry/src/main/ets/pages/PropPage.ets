@@ -27,38 +27,30 @@ class Task{
 @Component
 struct PropPage{
   //总任务数量
-  @State totalTask:number=0
+  @Provide totalTask:number=0
   //己完成任务数量
-  @State finishTask:number=0
-  //任务数组
-  @State tasks:Task[]=[]
-
+  @Provide finishTask:number=0
   build(){
     Column({space:10}){
       //1.任务角度卡片
-      Row(){
-        Text('任务进度')
-          .fontSize(30)
-          .fontWeight(FontWeight.Bold)
-        Stack(){ //叠加容器
-          Progress({
-            value:this.finishTask,
-            total:this.totalTask,
-            type:ProgressType.Ring //环形圆环样式
-          }).width(100)
-          Row(){
-            Text(this.finishTask.toString())
-              .fontSize(24)
-              .fontColor('#36D')
-            Text('/'+this.totalTask.toString())
-              .fontSize(24)
-          }
-        }
-      }
-      .card()//卡片样式背景
-      .margin({top:20,bottom:10})
-      .justifyContent(FlexAlign.SpaceEvenly)
+      TaskStatistics()
+      //2.新增任务按钮
+      TaskList()
+    }.width('100%').height('100%').backgroundColor('@F1F2F3')
+  }
 
+}
+
+@Component
+struct TaskList{
+  //总任务数量
+  @Consume totalTask:number
+  //己完成任务数量
+  @Consume finishTask:number
+  //任务数组
+  @State tasks:Task[]=[]
+  build(){
+    Column(){
       //2.新增任务按钮
       Button('新增任务')
         .width(200)
@@ -75,19 +67,19 @@ struct PropPage{
           (item:Task,index)=>{
             ListItem(){
               Row(){
-              Text(item.name)
-                .fontSize(20)
-              Checkbox()
-                .select(item.finished)
-                .onChange(val=>{
-                  //1.更新当前任务状态
-                  item.finished=val;
-                  //2.更新已完成任务数量
-                  this.handleTaskChange()
-                })
-            }
-            .card()//卡片样式背景
-            .justifyContent(FlexAlign.SpaceBetween)
+                Text(item.name)
+                  .fontSize(20)
+                Checkbox()
+                  .select(item.finished)
+                  .onChange(val=>{
+                    //1.更新当前任务状态
+                    item.finished=val;
+                    //2.更新已完成任务数量
+                    this.handleTaskChange()
+                  })
+              }
+              .card()//卡片样式背景
+              .justifyContent(FlexAlign.SpaceBetween)
             }
             .swipeAction({
               end:this.DeleteButton(index)
@@ -96,7 +88,8 @@ struct PropPage{
         )
       }
       .alignListItem(ListItemAlign.Center).width('100%').layoutWeight(1)
-    }.width('100%').height('100%').backgroundColor('@F1F2F3')
+    }
+
   }
   @Builder DeleteButton(index:number){
     Button(){
@@ -114,13 +107,44 @@ struct PropPage{
       this.handleTaskChange()
     })
   }
-
-
-
   handleTaskChange(){
     //1.更新任务总数量
     this.totalTask=this.tasks.length
     //2.更新已完成任务数量
     this.finishTask=this.tasks.filter(item=>item.finished).length;//将任务已经完成的过滤出来
+  }
+}
+
+
+@Component
+struct TaskStatistics{
+  //总任务数量
+  @Consume totalTask:number //不允许子组件初始化 因为数据都是从父组件来的
+  //己完成任务数量
+  @Consume finishTask:number
+  build(){
+    //1.任务角度卡片
+    Row(){
+      Text('任务进度')
+        .fontSize(30)
+        .fontWeight(FontWeight.Bold)
+      Stack(){ //叠加容器
+        Progress({
+          value:this.finishTask,
+          total:this.totalTask,
+          type:ProgressType.Ring //环形圆环样式
+        }).width(100)
+        Row(){
+          Text(this.finishTask.toString())
+            .fontSize(24)
+            .fontColor('#36D')
+          Text('/'+this.totalTask.toString())
+            .fontSize(24)
+        }
+      }
+    }
+    .card()//卡片样式背景
+    .margin({top:20,bottom:10})
+    .justifyContent(FlexAlign.SpaceEvenly)
   }
 }
