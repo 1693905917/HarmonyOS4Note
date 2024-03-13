@@ -1,3 +1,4 @@
+import {Header} from '../components/CommonComponents'
 @Entry
 @Component
 struct Index {
@@ -6,7 +7,8 @@ struct Index {
   build() {
     //整个大框架应该是从上而下的Column组件
     Column() {
-
+      Header({title:'图片案例'})
+        .margin({bottom:20})
       Row(){
         //本地图片
         Image($r('app.media.icon'))

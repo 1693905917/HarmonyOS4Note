@@ -1,3 +1,5 @@
+
+import {Header} from '../components/CommonComponents'
 //任务表
 @Observed
 class Task{
@@ -33,6 +35,7 @@ struct PropPage{
   @Provide finishTask:number=0
   build(){
     Column({space:10}){
+      Header({title:'任务列表'}).margin({bottom:20});
       //1.任务角度卡片
       TaskStatistics({totalTask:this.totalTask,finishTask:this.finishTask})
       //2.新增任务按钮

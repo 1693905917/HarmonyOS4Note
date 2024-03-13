@@ -106,7 +106,7 @@ struct ItemPage {
       //  .width('100%')
       //  .margin({bottom:20})
       //  .height(30)  //给予“商品列表”一个固定长度
-      Header()
+      Header({title:'商品列表'})
         .margin({bottom:20})
       //List:也属于容器
       List({space:8}){
