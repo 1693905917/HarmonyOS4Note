@@ -30,13 +30,12 @@ struct AnimationPage {
           Button('开始游戏')
             .onClick(() => {
               //点击后显示小鱼
-              this.isBegin = true
-              // animateTo(
-              //   {duration: 1000},
-              //   () => {
-              //
-              //   }
-              // )
+              animateTo(
+                {duration: 1000},
+                () => {
+                  this.isBegin = true
+                }
+              )
             })
         }else{
           // 小鱼图片
@@ -45,17 +44,11 @@ struct AnimationPage {
             .rotate({angle:this.angle, centerX: '50%', centerY: '50%'})
             .width(40)
             .height(40)
-            // .animation(
-            //   {
-            //     duration:500
-            //   }
-            // )
-              //.animation({duration: 500, curve: Curve.Smooth})
-            // .transition({
-            //   type: TransitionType.Insert,
-            //   opacity: 0,
-            //   translate: {x: -250}
-            // })
+            .transition({
+              type: TransitionType.Insert,  //在插入时进行过渡动画
+              opacity: 0,  //开始时是完全透明的
+              translate: {x: -250}  //开始时的位置在显示屏外面
+            })
         }
         // 操作按钮
         Row(){
