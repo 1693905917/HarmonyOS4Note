@@ -6,6 +6,9 @@ import window from '@ohos.window';
 
 export default class EntryAbility extends UIAbility {
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+    //0x0000,'testTag'的作用都是一样的，就是个用来标识的一个参数，
+    // 也就是，你在将来不同的模块里，你可以用不同的一个标识的一个数字，将来在查日志的时候，可以用0x0000,'testTag'来进行过滤处当前模块的运行日志
+    //'%{public}s':%s相当于我们的转义字符，将后面的'Ability onCreate'给打印出来，而{public}可以设置，这个信息是否要出现在日志中，如果是public就是可以公开显示，如果是private则会隐藏
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
   }
 

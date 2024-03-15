@@ -19,9 +19,11 @@
     "abilities": [
       {
         "name": "EntryAbility",
+        //srcEntry：指代EntryAbility的文件在哪里
         "srcEntry": "./ets/entryability/EntryAbility.ts",
         "description": "$string:EntryAbility_desc",
-        "icon": "$media:icon",
+        //icon、label控制的是应用呈现在桌面上的图标与文字描述
+        "icon": "$media:ic_main",
         "label": "$string:EntryAbility_label",
         "startWindowIcon": "$media:startIcon",
         "startWindowBackground": "$color:start_window_background",

@@ -1,6 +1,8 @@
 {
   "app": {
+    //bundleName：一个应用的一个唯一标识，这个bundleName不能在配置文件里去修改的，那其实呢是在我们创建一个新的应用的那一刻就指定好了
     "bundleName": "com.example.myfirstplus",
+    //
     "vendor": "example",
     "versionCode": 1000000,
     "versionName": "1.0.0",
