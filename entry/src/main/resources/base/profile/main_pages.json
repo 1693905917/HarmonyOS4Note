@@ -8,6 +8,8 @@
     "pages/AnimationPage",
     "pages/LifeCirclePage",
     "pages/TestPage1",
-    "pages/TestPage2"
+    "pages/TestPage2",
+    "pages/DocumentListPage",
+    "pages/DocumentPage"
   ]
 }

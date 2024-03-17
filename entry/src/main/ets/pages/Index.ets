@@ -20,7 +20,8 @@ struct Index {
     new RouterInfo('pages/PropPage', '任务列表案例'),
     new RouterInfo('pages/AnimationPage', '小鱼动画案例'),
     new RouterInfo('pages/LifeCirclePage', '生命周期案例1'),
-    new RouterInfo('pages/TestPage1', '生命周期案例2')
+    new RouterInfo('pages/TestPage1', '生命周期案例2'),
+    new RouterInfo('pages/DocumentListPage', 'UIAbility启动模式案例')
   ]
   build() {
     Row() {
