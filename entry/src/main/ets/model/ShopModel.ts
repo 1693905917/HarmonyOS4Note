@@ -1,8 +1,42 @@
 import http from '@ohos.net.http'
 import ShopInfo from '../viewmodel/ShopInfo'
+// import axios from '@ohos/axios'
 class ShopModel{
   baseURL: string = 'http://localhost:3000'
   pageNo: number = 1
+
+  // getShopList():Promise<ShopInfo[]>{
+  //   //resolve:通知成功   reject:通知失败
+  //   return new Promise((resolve,reject)=>{
+  //     //2.发送请求
+  //     axios.get(
+  //       `${this.baseURL}/shops`,
+  //       {
+  //         params:{pageNo:this.pageNo,pageSize:3}
+  //       }
+  //     )
+  //       //请求成功
+  //       .then((resp)=>{
+  //         if(resp.status===200){
+  //           //JSON.parse功能：把一个JSON的字符串转成一个对象
+  //           console.log('查询商铺成功！',JSON.stringify(resp.data))
+  //           resolve(resp.data); //通知成功
+  //         }else{
+  //           console.log('查询商铺信息失败！error:',JSON.stringify(resp))
+  //           reject('查询商铺失败')
+  //         }
+  //       })
+  //         //请求失败
+  //       .catch((err:Error)=>{
+  //         //JSON.stringify将err对象转换成字符串
+  //         console.log('查询商铺信息失败！error:',JSON.stringify(err))
+  //         reject('查询商铺失败')
+  //       })
+  //   })
+  // }
+
+
+
   //创建方法：我们是异步调用，那么我们这个getShopList函数就应该也是异步返回
   getShopList():Promise<ShopInfo[]>{
     //resolve:通知成功   reject:通知失败
