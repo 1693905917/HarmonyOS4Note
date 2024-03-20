@@ -34,9 +34,7 @@ class ShopModel{
   //       })
   //   })
   // }
-
-
-
+  
   //创建方法：我们是异步调用，那么我们这个getShopList函数就应该也是异步返回
   getShopList():Promise<ShopInfo[]>{
     //resolve:通知成功   reject:通知失败

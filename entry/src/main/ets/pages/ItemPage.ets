@@ -30,7 +30,7 @@ class Item {
 //     .height(30)  //给予“商品列表”一个固定长度
 //   }
 // }
-import {Header} from '../components/CommonComponents'
+import {Header} from '../components/components/CommonComponents'
 
 //全局自定义构建函数
 // @Builder

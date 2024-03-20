@@ -1,4 +1,4 @@
-import { Header } from '../components/CommonComponents'
+import { Header } from '../components/components/CommonComponents'
 import ShopInfo from  '../viewmodel/ShopInfo'
 import ShopItem from '../views/ShopItem'
 import ShopModel from '../model/ShopModel'

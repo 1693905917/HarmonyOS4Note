@@ -1,6 +1,6 @@
 import common from '@ohos.app.ability.common'
 import Want from '@ohos.app.ability.Want'
-import { Header } from '../components/CommonComponents'
+import { Header } from '../components/components/CommonComponents'
 @Entry
 @Component
 struct DocumentListPage {

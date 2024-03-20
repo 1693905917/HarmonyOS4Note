@@ -1,4 +1,4 @@
-import {Header} from '../components/CommonComponents'
+import {Header} from '../components/components/CommonComponents'
 class Person{
   name:string
   age:number

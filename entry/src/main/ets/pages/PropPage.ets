@@ -1,5 +1,5 @@
 
-import {Header} from '../components/CommonComponents'
+import {Header} from '../components/components/CommonComponents'
 //任务表
 @Observed
 class Task{
