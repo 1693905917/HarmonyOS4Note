@@ -1,4 +1,4 @@
-// import PreferencesUtil from '../common/util/PreferencesUtil'
+import PreferencesUtil from '../components/util/PreferencesUtil'
 
 @Component
 export default struct IndexFontSizePanel {
@@ -28,7 +28,7 @@ export default struct IndexFontSizePanel {
             // 修改字体大小
             this.fontSize = val
             // 写入Preferences
-            // PreferencesUtil.putPreferenceValue('MyPreferences', 'IndexFontSize', val)
+            PreferencesUtil.putPreferenceValue('MyPreferences', 'IndexFontSize', val)
           })
         Text('A').fontSize(20).fontWeight(FontWeight.Bold)
       }.width('100%')

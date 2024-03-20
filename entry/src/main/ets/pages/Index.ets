@@ -1,16 +1,8 @@
 import router from '@ohos.router';
 import RouterItem from '../views/RouterItem'
 import IndexFontSizePanel from '../views/IndexFontSizePanel'
-class RouterInfo{
-  //页面路径
-  url:string
-  //页面标题
-  title:string
-  constructor(url:string,title:string) {
-    this.url=url;
-    this.title=title;
-  }
-}
+import PreferencesUtil from '../components/util/PreferencesUtil'
+import RouterInfo from '../viewmodel/RouterInfo'
 
 const routers: RouterInfo[] = [
   new RouterInfo('pages/ImagePage', '图片查看案例'),
@@ -23,12 +15,22 @@ const routers: RouterInfo[] = [
   new RouterInfo('pages/DocumentListPage', 'UIAbility启动模式案例'),
   new RouterInfo('pages/ShopPage', '查询商铺案例')
 ]
+
 @Entry
 @Component
 struct Index {
   @State message: string = '页面列表'
   @State showPanel: boolean = false
+  //数据同步修改，父与子操作：与IndexFontSizePanel.ets中的@Consume fontSize: number同步
   @Provide fontSize: number = 16
+
+
+  async aboutToAppear(){
+    //为什么要as number？
+    // 答：PreferencesUtil.getPreferenceValue('MyPreferences', 'IndexFontSize', 16)返回的是preferences.ValueType类型的数据
+    //所以要进行数据类型转换
+    this.fontSize = await PreferencesUtil.getPreferenceValue('MyPreferences', 'IndexFontSize', 16) as number
+  }
 
   build() {
     Column() {
