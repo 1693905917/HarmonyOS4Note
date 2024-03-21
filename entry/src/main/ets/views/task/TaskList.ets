@@ -16,11 +16,15 @@ export default struct TaskList {
     builder: TaskInfoDialog({onTaskConfirm: this.handleAddTask.bind(this)}),
   })
 
-  aboutToAppear() {
-    //TODO 查询任务列表
+  aboutToAppear(){
+    // 查询任务列表
     console.log('testTag', '初始化组件，查询任务列表')
-    // 更新任务状态
-    this.handleTaskChange()
+    TaskModel.getTaskList()
+      .then(tasks => {
+        this.tasks = tasks
+        // 更新任务状态
+        this.handleTaskChange()
+      })
   }
 
   handleTaskChange(){
@@ -30,15 +34,19 @@ export default struct TaskList {
     this.finishTask = this.tasks.filter(item => item.finished).length
   }
 
-  handleAddTask(name: string) {
-    // TODO 1.新增任务
-    console.log('testTag', '处理新增任务: ', name)
-    // 回显到数组页面
-    this.tasks.push(new TaskInfo(this.idx++, name))
-    // 2.更新任务完成状态
-    this.handleTaskChange()
-    // 3.关闭对话框
-    this.dialogController.close()
+  handleAddTask(name: string){
+    // 1.新增任务
+    TaskModel.addTask(name)
+      .then(id => {
+        console.log('testTag', '处理新增任务: ', name)
+        // 回显到数组页面
+        this.tasks.push(new TaskInfo(id, name))
+        // 2.更新任务完成状态
+        this.handleTaskChange()
+        // 3.关闭对话框
+        this.dialogController.close()
+      })
+      .catch(error => console.log('testTag', '新增任务失败：', name, JSON.stringify(error)))
 
   }
 
@@ -59,7 +67,7 @@ export default struct TaskList {
           this.tasks,
           (item: TaskInfo, index) => {
             ListItem(){
-              TaskItem({item: item as TaskInfo, onTaskChange: this.handleTaskChange.bind(this)})
+              TaskItem({item : item as TaskInfo, onTaskChange: this.handleTaskChange.bind(this)})
             }
             .swipeAction({end: this.DeleteButton(index, item.id)})
           }
@@ -71,9 +79,8 @@ export default struct TaskList {
     }
   }
 
-  @Builder
-  DeleteButton(index: number, id: number) {
-    Button() {
+  @Builder DeleteButton(index: number, id: number){
+    Button(){
       Image($r('app.media.ic_public_delete_filled'))
         .fillColor(Color.White)
         .width(20)
@@ -84,15 +91,19 @@ export default struct TaskList {
     .backgroundColor(Color.Red)
     .margin(5)
     .onClick(() => {
-      //TODO 删除任务
-      this.tasks.splice(index, 1)
-      console.log('testTag', `尝试删除任务，index: ${index}`)
-      this.handleTaskChange()
+      // 删除任务
+      TaskModel.deleteTaskById(id)
+        .then(() => {
+          this.tasks.splice(index, 1)
+          console.log('testTag', `尝试删除任务，index: ${index}`)
+          this.handleTaskChange()
+        })
+        .catch(error => console.log('testTag', '删除任务失败，id = ', id, JSON.stringify(error)))
+
     })
   }
 }
 
-//弹窗按钮
 @CustomDialog
 struct TaskInfoDialog{
 

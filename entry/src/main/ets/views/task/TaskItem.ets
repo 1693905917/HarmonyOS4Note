@@ -7,20 +7,25 @@ export default struct TaskItem {
   onTaskChange: (item: TaskInfo) => void
 
   build() {
-    Row() {
-      if (this.item.finished) {
+    Row(){
+      if(this.item.finished){
         Text(this.item.name)
           .finishedTask()
-      } else {
+      }else{
         Text(this.item.name)
       }
       Checkbox()
         .select(this.item.finished)
         .onChange(async val => {
-          //TODO 1.更新当前任务状态
-          this.item.finished = val
-          // 2.更新已完成任务数量
-          this.onTaskChange(this.item)
+          // 1.更新当前任务状态
+          TaskModel.updateTaskStatus(this.item.id, val)
+            .then(() => {
+              this.item.finished = val
+              // 2.更新已完成任务数量
+              this.onTaskChange(this.item)
+            })
+            .catch(error => console.log('testTag', '更新任务状态失败, id = ', this.item.id, JSON.stringify(error)))
+
         })
     }
     .card()

@@ -21,7 +21,7 @@
       {
         "name": "EntryAbility",
         //srcEntry：指代EntryAbility的文件在哪里
-        "srcEntry": "./ets/entryability/EntryAbility.ts",
+        "srcEntry": "./ets/entryability/EntryAbility.ets",
         "description": "$string:EntryAbility_desc",
         //icon、label控制的是应用呈现在桌面上的图标与文字描述
         "icon": "$media:ic_main",
