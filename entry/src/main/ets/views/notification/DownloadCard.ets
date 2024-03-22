@@ -1,5 +1,5 @@
 import notify from '@ohos.notificationManager'
-import wantAgent, { WantAgent } from '@ohos.app.ability.wantAgent'
+// import wantAgent, { WantAgent } from '@ohos.app.ability.wantAgent'
 import promptAction from '@ohos.promptAction'
 
 enum DownloadState {
@@ -27,27 +27,27 @@ export default struct DownloadCard {
   notificationId: number = 999
 
   isSupport: boolean = false
-
-  wantAgentInstance: WantAgent
+  //
+  // wantAgentInstance: WantAgent
 
   async aboutToAppear(){
     // 1.判断当前系统是否支持进度条模板
     this.isSupport = await notify.isSupportTemplate('downloadTemplate')
-    // 2.创建拉取当前应用的行为意图
-    // 2.1.创建wantInfo信息
-    let wantInfo: wantAgent.WantAgentInfo = {
-      wants: [
-        {
-          bundleName: 'com.example.myapplication',
-          abilityName: 'EntryAbility',
-        }
-      ],
-      requestCode: 0,
-      operationType: wantAgent.OperationType.START_ABILITY,
-      wantAgentFlags: [wantAgent.WantAgentFlags.CONSTANT_FLAG]
-    }
-    // 2.2.创建wantAgent实例
-    this.wantAgentInstance = await wantAgent.getWantAgent(wantInfo)
+    // // 2.创建拉取当前应用的行为意图
+    // // 2.1.创建wantInfo信息
+    // let wantInfo: wantAgent.WantAgentInfo = {
+    //   wants: [
+    //     {
+    //       bundleName: 'com.example.myapplication',
+    //       abilityName: 'EntryAbility',
+    //     }
+    //   ],
+    //   requestCode: 0,
+    //   operationType: wantAgent.OperationType.START_ABILITY,
+    //   wantAgentFlags: [wantAgent.WantAgentFlags.CONSTANT_FLAG]
+    // }
+    // // 2.2.创建wantAgent实例
+    // this.wantAgentInstance = await wantAgent.getWantAgent(wantInfo)
   }
 
   build() {
@@ -178,7 +178,7 @@ export default struct DownloadCard {
     let request: notify.NotificationRequest = {
       id: this.notificationId,
       template: template,
-      wantAgent: this.wantAgentInstance,
+      // wantAgent: this.wantAgentInstance,
       content: {
         contentType: notify.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT,
         normal: {
