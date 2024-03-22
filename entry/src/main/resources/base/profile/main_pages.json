@@ -12,6 +12,7 @@
     "pages/DocumentListPage",
     "pages/DocumentPage",
     "pages/ShopPage",
-    "pages/TaskManagePage"
+    "pages/TaskManagePage",
+    "pages/NotificationPage"
   ]
 }
